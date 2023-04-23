@@ -7,18 +7,12 @@ const budget = () => {
     return {
         events: ({ outputBudget }) => {
             inputBudget.addEventListener('keypress',
-                event => {
-                    // console.log(event);
+                event =>
                     event.keyCode != 13 && (event.keyCode == 32 || isNaN(event.key)) && event.preventDefault()
-
-                }
             )
             inputBudget.addEventListener('input',
-                event => {
-                    // TODO: prevent backtick input
-                    // console.log(event)
+                event =>
                     buttonSubmit.disabled = Number(event.target.value) < 1
-                }
             )
             form.addEventListener('submit',
                 event => {
