@@ -2,23 +2,23 @@ const budget = () => {
     const
         form = document.querySelector('#formBudget'),
         inputBudget = form.querySelector('#inputBudget'),
-        buttonSubmit = form.querySelector('[type="submit"]')
+        buttonSubmit = form.querySelector('[type="submit"]'),
+        disabledSubmit = () => buttonSubmit.disabled = Number(inputBudget.value) < 1
 
     return {
+        disabledSubmit,
         events: ({ outputBudget }) => {
             inputBudget.addEventListener('keypress',
                 event =>
                     event.keyCode != 13 && (event.keyCode == 32 || isNaN(event.key)) && event.preventDefault()
             )
-            inputBudget.addEventListener('input',
-                event =>
-                    buttonSubmit.disabled = Number(event.target.value) < 1
-            )
+            inputBudget.addEventListener('input', disabledSubmit)
             form.addEventListener('submit',
                 event => {
                     event.preventDefault()
                     outputBudget.innerText = inputBudget.value;
                     form.reset()
+                    disabledSubmit()
                 }
             )
         }
@@ -35,7 +35,8 @@ const expense = () => {
             buttonSubmit.disabled = !Boolean(inputNameExpense.value) || Number(inputAmountExpense.value) < 1
 
     return {
-        events: () => {
+        disabledSubmit,
+        events: ({ outputExpense }) => {
             inputAmountExpense.addEventListener('input', disabledSubmit)
             inputAmountExpense.addEventListener('keypress',
                 event =>
@@ -49,12 +50,16 @@ const expense = () => {
             form.addEventListener('submit',
                 event => {
                     event.preventDefault()
-                    // TODO: output 
+                    outputExpense.addExpense({
+                        nameExpense: inputNameExpense.value,
+                        amountExpense: Number(inputAmountExpense.value)
+                    })
                     form.reset()
+                    disabledSubmit()
                 }
             )
         }
     }
 }
 
-export { expense, budget }
+export default { expense, budget }

@@ -149,6 +149,7 @@
                         </label>
                         <input
                             id="nameExpense"
+                            name="nameExpense"
                             class="form-control bg-danger-subtle border-secondary border-opacity-50"
                             type="text"
                             required
@@ -163,6 +164,7 @@
                         </label>
                         <input
                             id="amountExpense"
+                            name="amountExpense"
                             class="form-control bg-danger-subtle border-secondary border-opacity-50"
                             type="number"
                             min="0"
@@ -181,8 +183,8 @@
 
             <section class="col-12 col-lg-7">
 
-                <dl
-                    id="list-expense"
+                <!-- <dl
+                    id="listExpenses"
                     class="list-group list-group-flush border-bottom"
                 >
                     <dt class="list-group-item border-black border-2 border-start-0 border-top-0 border-end-0">
@@ -192,47 +194,48 @@
                             <div class="col text-uppercase fw-bold"></div>
                         </div>
                     </dt>
+                </dl> -->
 
 
-                    <!-- <dd class="list-group-item">
-                        <div class="row row-cols-3">
-                            <div class="col">
-                                nameExpense
-                            </div>
-                            <div class="col">
-                                amountExpense
-                            </div>
-                            <div class="col">
-                                <button class="icon-link btn btn-outline-primary border-0" >
-                                    deleteExpense
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path
-                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                                        <path
-                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </dd> -->
-                    <dd
-                        id="index-${index}"
-                        class="list-group-item"
-                    >
-                        <div class="row row-cols-3">
-                            <div class="col">
-                                ${nameExpense}
-                            </div>
-                            <div class="col">
-                                ${amountExpense}
-                            </div>
-                            <div class="col">
+
+
+                <table
+                    id="listExpenses"
+                    class="table"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="text-uppercase"
+                                scope="col"
+                            >
+                                gastos
+                            </th>
+                            <th
+                                class="text-uppercase"
+                                scope="col"
+                            >
+                                valor
+                            </th>
+                            <th
+                                class="text-uppercase"
+                                scope="col"
+                            >
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr></tr>
+                        <!-- <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>
                                 <button
                                     class="icon-link btn btn-outline-primary border-0"
-                                    type="button"
+                                    onclick=deleteExpense('aa',this)
                                     value="${index}"
-                                    onclick="deleteExpense(this)"
+                                    data-delete-expense=${index}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -250,13 +253,10 @@
                                         />
                                     </svg>
                                 </button>
-                            </div>
-                        </div>
-                    </dd>
-
-
-
-                </dl>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
 
             </section>
 
