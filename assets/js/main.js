@@ -1,17 +1,17 @@
-import forms from "./components/formsComponent.js"
+import budgetFormComponent from "./components/forms/budgetFormComponent.js"
+import expenseFormComponent from "./components/forms/expenseFormComponent.js"
 import expenses from "./stores/expenses.js"
 
 addEventListener('DOMContentLoaded', () => {
     const
         outputBudget = document.querySelector('#outputBudget'),
         outputExpense = document.querySelector('#outputExpense'),
+        balance = document.querySelector('#balance'),
         listExpenses = document.querySelector('#listExpenses tbody'),
-        formBudget = forms.budget(),
-        formExpense = forms.expense(),
-        storeExpenses = expenses(listExpenses)
+        formBudget = budgetFormComponent(),
+        formExpense = expenseFormComponent(),
+        storeExpenses = expenses({ listExpenses, balance, outputExpense, outputBudget })
 
-    formBudget.disabledSubmit()
-    formExpense.disabledSubmit()
-    formBudget.events({ outputBudget })
-    formExpense.events({ outputExpense: storeExpenses, listExpenses })
+    formBudget.events({ outputBudget, renderBalance: storeExpenses.renderExpenses })
+    formExpense.events({ outputExpense: storeExpenses })
 })

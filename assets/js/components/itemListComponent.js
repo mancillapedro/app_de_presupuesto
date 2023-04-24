@@ -27,7 +27,11 @@ export default ({
             />
         </svg>`;
 
-    [nameExpense, amountExpense, "button"].forEach(element => {
+    [
+        nameExpense,
+        amountExpense.toLocaleString("es-cl", { style: "currency", currency: "CLP" }),
+        "button"
+    ].forEach(element => {
         const td = document.createElement("td")
         element != "button" ? (td.innerText = element) : td.appendChild(buttonDelete)
         tr.appendChild(td)
