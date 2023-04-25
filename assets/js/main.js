@@ -12,6 +12,7 @@ addEventListener('DOMContentLoaded', () => {
         formExpense = expenseFormComponent(),
         storeExpenses = expenses({ listExpenses, balance, outputExpense, outputBudget })
 
+    storeExpenses.initialize()
     formBudget.events({ outputBudget, renderBalance: storeExpenses.renderExpenses })
     formExpense.events({ outputExpense: storeExpenses })
 })

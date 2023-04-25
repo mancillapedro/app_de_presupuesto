@@ -5,10 +5,12 @@ export default ({ listExpenses, outputExpense, balance, outputBudget }) => {
         expenses = [],
         addExpense = expense => {
             expenses.push(expense)
+            localStorage.setItem('expenses', JSON.stringify(expenses))
             renderExpenses()
         },
         deleteExpense = index => {
             expenses.splice(index, 1)
+            localStorage.setItem('expenses', JSON.stringify(expenses))
             renderExpenses()
         },
         totalExpenses = () =>
@@ -25,10 +27,26 @@ export default ({ listExpenses, outputExpense, balance, outputBudget }) => {
             const totalBalance = Number(outputBudget.dataset.value - totalExpenses())
             balance.innerText = totalBalance.toLocaleString("es-cl", { style: "currency", currency: "CLP" })
             balance.classList.toggle('text-danger', totalBalance < 0)
+        },
+        initialize = () => {
+            if (localStorage.getItem('budget')) {
+                try {
+                    const budget = Number(JSON.parse(localStorage.getItem('budget')))
+                    outputBudget.dataset.value = budget
+                    outputBudget.innerText = budget.toLocaleString("es-cl", { style: "currency", currency: "CLP" })
+                }
+                catch (e) { localStorage.removeItem('budget') }
+            }
+            if (localStorage.getItem('expenses')) {
+                try { expenses.push(...JSON.parse(localStorage.getItem('expenses'))) }
+                catch (e) { localStorage.removeItem('expenses') }
+            }
+            renderExpenses()
         }
 
     return {
         // expenses,
+        initialize,
         addExpense,
         // deleteExpense,
         // totalExpenses,
