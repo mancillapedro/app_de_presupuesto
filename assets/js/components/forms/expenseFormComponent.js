@@ -8,7 +8,7 @@ export default () => {
             buttonSubmit.disabled = !Boolean(inputNameExpense.value) || Number(inputAmountExpense.value) < 1
 
     return {
-        events: ({ outputExpense }) => {
+        events: ({ storage, render }) => {
             inputNameExpense.addEventListener('input', disabledSubmit)
             inputAmountExpense.addEventListener('input', disabledSubmit)
             inputAmountExpense.addEventListener('keypress',
@@ -18,10 +18,11 @@ export default () => {
             form.addEventListener('submit',
                 event => {
                     event.preventDefault()
-                    outputExpense.addExpense({
+                    storage.addExpense({
                         nameExpense: inputNameExpense.value,
                         amountExpense: Number(inputAmountExpense.value)
                     })
+                    render()
                     form.reset()
                     disabledSubmit()
                 }

@@ -3,10 +3,10 @@ export default () => {
         form = document.querySelector('#formBudget'),
         inputBudget = form.querySelector('#inputBudget'),
         buttonSubmit = form.querySelector('[type="submit"]'),
-        disabledSubmit = () => buttonSubmit.disabled = Number(inputBudget.value) < 1
+        disabledSubmit = () => buttonSubmit.disabled = inputBudget.value == "" || Number(inputBudget.value) < 0
 
     return {
-        events: ({ outputBudget, renderBalance }) => {
+        events: ({ storage, render }) => {
             inputBudget.addEventListener('keypress',
                 event =>
                     event.keyCode != 13 && (event.keyCode == 32 || isNaN(event.key)) && event.preventDefault()
@@ -15,13 +15,10 @@ export default () => {
             form.addEventListener('submit',
                 event => {
                     event.preventDefault()
-                    const budget = Number(inputBudget.value)
-                    outputBudget.innerText = budget.toLocaleString("es-cl", { style: "currency", currency: "CLP" });
-                    outputBudget.dataset.value = budget
-                    localStorage.setItem('budget', JSON.stringify(budget))
+                    storage.budget = Number(inputBudget.value)
                     form.reset()
-                    renderBalance()
                     disabledSubmit()
+                    render()
                 }
             )
         }

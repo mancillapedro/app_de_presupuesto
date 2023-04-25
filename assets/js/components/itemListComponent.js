@@ -2,14 +2,18 @@ export default ({
     index,
     nameExpense,
     amountExpense,
-    deleteExpense
+    storage,
+    render
 }) => {
     const
         buttonDelete = document.createElement('button'),
         tr = document.createElement("tr");
 
     buttonDelete.classList.add('icon-link', 'btn', 'btn-outline-primary', 'border-0')
-    buttonDelete.addEventListener('click', () => deleteExpense(index))
+    buttonDelete.addEventListener('click', () => {
+        storage.removeExpense(index)
+        render()
+    })
     buttonDelete.innerHTML = `
         <svg
             xmlns="http://www.w3.org/2000/svg"
