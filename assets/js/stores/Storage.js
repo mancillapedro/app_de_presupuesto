@@ -13,7 +13,6 @@ export default class Storage {
             catch (e) { localStorage.removeItem(this.#nameStorage) }
     }
 
-    get _nameStorage() { return this.#nameStorage }
     get _storage() { return this.#storage }
     set _storage(newStorage) {
         this.#storage = newStorage

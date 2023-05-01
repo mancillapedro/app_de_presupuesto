@@ -19,6 +19,8 @@ export default ({
     )
 
     buttonDelete.addEventListener('click', () => {
+        const accept = confirm(`¿Estás seguro de eliminar el gasto "${nameExpense}"?`)
+        if (!accept) return;
         storage.removeExpense(index)
         render()
     })
