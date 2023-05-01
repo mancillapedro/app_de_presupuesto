@@ -1,3 +1,5 @@
+import toCLPString from "../utils/toCLPString.js";
+
 export default ({
     index,
     nameExpense,
@@ -7,13 +9,20 @@ export default ({
 }) => {
     const
         buttonDelete = document.createElement('button'),
-        tr = document.createElement("tr");
+        li = document.createElement("li");
 
-    buttonDelete.classList.add('icon-link', 'btn', 'btn-outline-primary', 'border-0')
+    buttonDelete.classList.add(
+        'icon-link',
+        'btn',
+        'btn-outline-primary',
+        'border-0'
+    )
+
     buttonDelete.addEventListener('click', () => {
         storage.removeExpense(index)
         render()
     })
+
     buttonDelete.innerHTML = `
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,15 +40,15 @@ export default ({
             />
         </svg>`;
 
-    [
-        nameExpense,
-        amountExpense.toLocaleString("es-cl", { style: "currency", currency: "CLP" }),
-        "button"
-    ].forEach(element => {
-        const td = document.createElement("td")
-        element != "button" ? (td.innerText = element) : td.appendChild(buttonDelete)
-        tr.appendChild(td)
-    })
+    li.classList.add('list-group-item', 'p-2')
+    li.innerHTML = `
+        <dl class="row row-cols-md-3 m-0 g-0 align-items-center">
+            <dt class="col col-6 fw-normal">${nameExpense}</dt>
+            <dd class="col col-5 m-0">${toCLPString(amountExpense)}</dd>
+            <dd class="col col-1 m-0"></dd>
+        </dl>`
 
-    return tr
+    li.querySelector("dd:last-child").appendChild(buttonDelete)
+
+    return li
 }

@@ -1,4 +1,5 @@
 import itemListComponent from "../components/itemListComponent.js"
+import toCLPString from "./../utils/toCLPString.js"
 
 export default class HomeView {
     #storageExpenses
@@ -14,7 +15,7 @@ export default class HomeView {
         this.#outputBudget = document.querySelector('#outputBudget')
         this.#outputExpense = document.querySelector('#outputExpense')
         this.#balance = document.querySelector('#balance')
-        this.#listExpenses = document.querySelector('#listExpenses tbody')
+        this.#listExpenses = document.querySelector('#listExpenses')
 
     }
 
@@ -24,17 +25,26 @@ export default class HomeView {
             totalExpenses = this.#storageExpenses.totalExpenses(),
             totalBalance = Number(this.#storageBudget.budget - totalExpenses);
 
-        this.#outputBudget.innerText = this.#storageBudget.budget.toLocaleString("es-cl", { style: "currency", currency: "CLP" });
-        [this.#listExpenses, this.#outputExpense, this.#balance].forEach(e => e.innerHTML = '')
+        this.#outputBudget.innerText = toCLPString(this.#storageBudget.budget);
 
-        expenses.forEach((expense, index) =>
-            this.#listExpenses.insertAdjacentElement('beforeend',
-                itemListComponent({ index, ...expense, storage: this.#storageExpenses, render: this.renderView })
-            )
+        [this.#listExpenses, this.#outputExpense, this.#balance]
+            .forEach(e => e.innerHTML = '')
+
+        expenses.forEach(
+            (expense, index) =>
+                this.#listExpenses.insertAdjacentElement(
+                    'beforeend',
+                    itemListComponent({
+                        index,
+                        ...expense,
+                        storage: this.#storageExpenses,
+                        render: this.renderView
+                    })
+                )
         )
 
-        this.#outputExpense.innerText = totalExpenses.toLocaleString("es-cl", { style: "currency", currency: "CLP" })
-        this.#balance.innerText = totalBalance.toLocaleString("es-cl", { style: "currency", currency: "CLP" })
+        this.#outputExpense.innerText = toCLPString(totalExpenses)
+        this.#balance.innerText = toCLPString(totalBalance)
         this.#balance.classList.toggle('text-danger', totalBalance < 0)
     }
 }

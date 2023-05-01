@@ -1,31 +1,26 @@
-export default class Expenses {
-    #expenses;
-    constructor() {
-        this.#expenses = []
-        if (localStorage.getItem('expenses')) {
-            try { this.#expenses.push(...JSON.parse(localStorage.getItem('expenses'))) }
-            catch (e) { localStorage.removeItem('expenses') }
-        }
-    }
-    get expenses() { return this.#expenses }
+import Storage from "./Storage.js";
 
-    #setLocalStorage() {
-        localStorage.setItem('expenses', JSON.stringify(this.#expenses))
+export default class Expenses extends Storage {
+    constructor(name_storage = 'expenses') {
+        super(name_storage)
     }
+
+    get expenses() { return this._storage }
 
     addExpense(expense) {
-        this.#expenses.push(expense)
-        this.#setLocalStorage()
+        const storage = [...this._storage]
+        storage.push(expense)
+        this._storage = storage
     }
 
     removeExpense(index) {
-        this.#expenses.splice(index, 1)
-        this.#setLocalStorage()
+        const storage = [...this._storage]
+        storage.splice(index, 1)
+        this._storage = storage
     }
 
     totalExpenses() {
-        return this.#expenses.reduce((total, expense) => total + expense.amountExpense, 0)
+        return this._storage.reduce((total, expense) => total + expense.amountExpense, 0)
     }
-
 
 }

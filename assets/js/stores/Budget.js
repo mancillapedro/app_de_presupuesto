@@ -1,14 +1,17 @@
-export default class Budget {
-    #budget = 0;
-    constructor() {
-        if (localStorage.getItem('budget'))
-            try { this.#budget = Number(JSON.parse(localStorage.getItem('budget'))) }
-            catch (e) { localStorage.removeItem('budget') }
+import Storage from "./Storage.js";
+
+export default class Budget extends Storage {
+
+    constructor(name_storage = 'budget') {
+        super(name_storage)
     }
-    get budget() { return this.#budget }
+
+    get budget() { return Number(this._storage[0]) }
+
     set budget(newBudget) {
         if (newBudget < 0) return;
-        this.#budget = newBudget
-        localStorage.setItem('budget', JSON.stringify(this.#budget))
+        const storage = [...this._storage]
+        storage[0] = newBudget
+        this._storage = storage
     }
 }

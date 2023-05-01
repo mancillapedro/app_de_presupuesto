@@ -3,14 +3,24 @@ export default () => {
         form = document.querySelector('#formBudget'),
         inputBudget = form.querySelector('#inputBudget'),
         buttonSubmit = form.querySelector('[type="submit"]'),
-        disabledSubmit = () => buttonSubmit.disabled = inputBudget.value == "" || Number(inputBudget.value) < 0
+        disabledSubmit = () =>
+            buttonSubmit.disabled = (
+                !Boolean(inputBudget.value.trim())
+                ||
+                Number(inputBudget.value) < 0
+            )
 
     return {
         events: ({ storage, render }) => {
             inputBudget.addEventListener('keypress',
                 event =>
-                    event.keyCode != 13 && (event.keyCode == 32 || isNaN(event.key)) && event.preventDefault()
+                    event.keyCode != 13
+                    &&
+                    (event.keyCode == 32 || isNaN(event.key))
+                    &&
+                    event.preventDefault()
             )
+
             inputBudget.addEventListener('input', disabledSubmit)
             form.addEventListener('submit',
                 event => {
@@ -21,6 +31,7 @@ export default () => {
                     render()
                 }
             )
+
         }
     }
 }
