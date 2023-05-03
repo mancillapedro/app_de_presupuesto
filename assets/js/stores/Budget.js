@@ -6,7 +6,7 @@ export default class Budget extends Storage {
         super(name_storage)
     }
 
-    get budget() { return Number(this._storage[0]) }
+    get budget() { return Number(this._storage[0]) || 0 }
 
     set budget(newBudget) {
         if (newBudget < 0) return;
