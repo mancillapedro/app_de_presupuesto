@@ -4,12 +4,16 @@ export default () => {
         inputAmountExpense = form.querySelector('#amountExpense'),
         inputNameExpense = form.querySelector('#nameExpense'),
         buttonSubmit = form.querySelector('[type="submit"]'),
-        disabledSubmit = () =>
+        disabledSubmit = () => {
+
             buttonSubmit.disabled = (
                 !Boolean(inputNameExpense.value.trim())
                 ||
                 Number(inputAmountExpense.value.trim()) < 1
             )
+            buttonSubmit.classList.toggle('btn-outline-danger', buttonSubmit.disabled)
+            buttonSubmit.classList.toggle('btn-danger', !buttonSubmit.disabled)
+        }
 
     return {
         events: ({ storage, render }) => {
