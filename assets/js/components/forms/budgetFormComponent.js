@@ -3,12 +3,15 @@ export default () => {
         form = document.querySelector('#formBudget'),
         inputBudget = form.querySelector('#inputBudget'),
         buttonSubmit = form.querySelector('[type="submit"]'),
-        disabledSubmit = () =>
+        disabledSubmit = () => {
             buttonSubmit.disabled = (
                 !Boolean(inputBudget.value.trim())
                 ||
                 Number(inputBudget.value) < 0
             )
+            buttonSubmit.classList.toggle('btn-outline-success', buttonSubmit.disabled)
+            buttonSubmit.classList.toggle('btn-success', !buttonSubmit.disabled)
+        }
 
     return {
         events: ({ storage, render }) => {
